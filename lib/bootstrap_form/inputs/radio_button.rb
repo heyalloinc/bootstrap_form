@@ -18,6 +18,7 @@ module BootstrapForm
             html = radio_button_without_bootstrap(name, value, radio_button_options)
             html.concat(radio_button_label(name, value, options)) unless options[:skip_label]
             html.concat(generate_error(name)) if options[:error_message]
+            html.concat(content_tag(:div, generate_help(name, options[:help])))
             html
           end
         end
