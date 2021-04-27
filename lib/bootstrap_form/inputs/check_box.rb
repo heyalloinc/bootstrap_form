@@ -17,6 +17,8 @@ module BootstrapForm
             html = check_box_without_bootstrap(name, check_box_options, checked_value, unchecked_value)
             html.concat(check_box_label(name, options, checked_value, &block)) unless options[:skip_label]
             html.concat(generate_error(name)) if options[:error_message]
+            html.concat(generate_valid_feedback(name, options[:valid_feedback])) if options[:valid_feedback]
+            html.concat(generate_invalid_feedback(name, options[:invalid_feedback])) if options[:invalid_feedback]
             html
           end
         end

@@ -8,6 +8,10 @@ module BootstrapForm
       class_methods do
         def bootstrap_field(field_name)
           define_method "#{field_name}_with_bootstrap" do |name, options={}|
+            if options[:help].present?
+              id = ActionView::Helpers::Tags::TextField.new(@object_name, name, {}).send(:tag_id)
+              options["aria-describedby"] = get_help_id(id)
+            end
             form_group_builder(name, options) do
               prepend_and_append_input(name, options) do
                 send("#{field_name}_without_bootstrap".to_sym, name, options)

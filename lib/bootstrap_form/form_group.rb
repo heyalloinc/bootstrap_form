@@ -9,13 +9,17 @@ module BootstrapForm
       name = args.first
 
       options[:class] = form_group_classes(options)
+      id = ActionView::Helpers::Tags::TextField.new(@object_name, name, {}).send(:tag_id)
 
       tag.div(options.except(:append, :id, :label, :help, :icon,
                              :input_group_class, :label_col, :control_col,
                              :add_control_col_class, :layout, :prepend)) do
         form_group_content(
           generate_label(options[:id], name, options[:label], options[:label_col], options[:layout]),
-          generate_help(name, options[:help]), options, &block
+          generate_help(id, name, options[:help]),
+          generate_valid_feedback(name, options[:valid_feedback]),
+          generate_invalid_feedback(name, options[:invalid_feedback]),
+          options, &block
         )
       end
     end
@@ -32,18 +36,20 @@ module BootstrapForm
       end
     end
 
-    def form_group_content(label, help_text, options, &block)
+    def form_group_content(label, help_tag, valid_tag, invalid_tag, options, &block)
       if group_layout_horizontal?(options[:layout])
-        concat(label).concat(tag.div(capture(&block) + help_text, class: form_group_control_class(options)))
+        concat(label).concat(tag.div(capture(&block) + help_tag, class: form_group_control_class(options)))
       elsif options[:layout] == :floating
         concat(capture(&block))
         concat(label)
-        concat(help_text) if help_text
+        concat(help_tag) if help_tag
       else
         concat(label)
         concat(capture(&block))
-        concat(help_text) if help_text
+        concat(help_tag) if help_tag
       end
+      concat(valid_tag) if valid_tag
+      concat(invalid_tag) if invalid_tag
     end
 
     def form_group_control_class(options)

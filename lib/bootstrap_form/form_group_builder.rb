@@ -15,7 +15,7 @@ module BootstrapForm
 
       options.except!(
         :help, :icon, :label_col, :control_col, :add_control_col_class, :layout, :skip_label, :label, :label_class,
-        :hide_label, :skip_required, :label_as_placeholder, :wrapper_class, :wrapper
+        :hide_label, :skip_required, :label_as_placeholder, :wrapper_class, :wrapper, :valid_feedback, :invalid_feedback
       )
 
       if no_wrapper
@@ -48,6 +48,8 @@ module BootstrapForm
         id: options[:id], help: options[:help], icon: options[:icon],
         label_col: options[:label_col], control_col: options[:control_col],
         add_control_col_class: options[:add_control_col_class],
+        valid_feedback: options[:valid_feedback],
+        invalid_feedback: options[:invalid_feedback],
         layout: get_group_layout(options[:layout]), class: options[:wrapper_class]
       }
 

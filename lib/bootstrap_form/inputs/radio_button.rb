@@ -13,12 +13,13 @@ module BootstrapForm
                                                 :inline, :hide_label, :skip_label, :wrapper_class)
 
           radio_button_options[:class] = radio_button_classes(name, options)
+          id = ActionView::Helpers::Tags::TextField.new(@object_name, name, {}).send(:tag_id)
 
           tag.div(class: radio_button_wrapper_class(options)) do
             html = radio_button_without_bootstrap(name, value, radio_button_options)
             html.concat(radio_button_label(name, value, options)) unless options[:skip_label]
             html.concat(generate_error(name)) if options[:error_message]
-            html.concat(content_tag(:div, generate_help(name, options[:help])))
+            html.concat(content_tag(:div, generate_help(id, name, options[:help])))
             html
           end
         end

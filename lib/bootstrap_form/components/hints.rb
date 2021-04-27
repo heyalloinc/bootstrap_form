@@ -7,14 +7,36 @@ module BootstrapForm
 
       private
 
-      def generate_help(name, help_text)
+      def generate_help(id, name, help_text)
         return if help_text == false || inline_error?(name)
 
         help_klass ||= "form-text text-muted"
         help_text ||= get_help_text_by_i18n_key(name)
         help_tag ||= :small
 
-        content_tag(help_tag, help_text, class: help_klass) if help_text.present?
+        content_tag(help_tag, help_text, class: help_klass, id: get_help_id(id)) if help_text.present?
+      end
+
+      def generate_valid_feedback(name, feedback_text)
+        return if feedback_text.blank? || inline_error?(name)
+
+        feedback_klass ||= "valid-feedback"
+        feedback_tag ||= :div
+
+        content_tag(feedback_tag, feedback_text, class: feedback_klass)
+      end
+
+      def generate_invalid_feedback(name, feedback_text)
+        return if feedback_text.blank? || inline_error?(name)
+
+        feedback_klass ||= "invalid-feedback"
+        feedback_tag ||= :div
+
+        content_tag(feedback_tag, feedback_text, class: feedback_klass)
+      end
+
+      def get_help_id(id)
+        "#{id}-help"
       end
 
       def get_help_text_by_i18n_key(name)
