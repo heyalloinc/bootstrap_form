@@ -1,3 +1,3 @@
 module BootstrapForm
-  VERSION = "5.0.0.alpha5".freeze
+  VERSION = "5.0.0.alpha6".freeze
 end
