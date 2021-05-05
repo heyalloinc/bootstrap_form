@@ -12,7 +12,7 @@ module BootstrapForm
       id = ActionView::Helpers::Tags::TextField.new(@object_name, name, {}).send(:tag_id)
 
       tag.div(options.except(:append, :id, :label, :help, :icon,
-                             :input_group_class, :label_col, :control_col,
+                             :input_group_class, :label_col, :control_col, :valid_feedback, :invalid_feedback,
                              :add_control_col_class, :layout, :prepend)) do
         form_group_content(
           generate_label(options[:id], name, options[:label], options[:label_col], options[:layout]),
